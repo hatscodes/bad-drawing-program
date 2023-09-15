@@ -1,4 +1,4 @@
-#V2.0
+#V2.5
 #by hatsfornone
 import pygame
 
@@ -19,22 +19,21 @@ pygame.display.set_caption("drawing")
 screen.fill(black)
 #classe(s)
 class cursor:
-    def __init__(self,x,y,width,height):
+    def __init__(self,x,y,radius,width):
         self.x = x
         self.y = y
+        self.radius = radius
         self.width = width
-        self.lenght = height
-#misc2
-cursor_x = -10
-cursor_y = -10
-cursor_color = white
+#cursor
+cursor_x, cursor_y = (-10,-10) #cursor needs a starting value
+cursor_color = white #starting color
 while run:
     #get input
     key = pygame.key.get_pressed()
     #clear and draw
     if pygame.mouse.get_pressed()[0] == True:
         cursor_x, cursor_y = pygame.mouse.get_pos()
-    if key[pygame.K_SPACE] == True:
+    if key[pygame.K_SPACE] or key[pygame.K_c] == True:
         screen.fill(black)
         cursor_x = -10
         cursor_y = -10
@@ -46,7 +45,7 @@ while run:
     if key[pygame.K_w] == True:
         cursor_color = white
         cursor_x = -10
-        cursor_y = -10
+        cursor_y = -10 
     if key[pygame.K_g] == True:
         cursor_color = green
         cursor_x = -10
@@ -57,10 +56,10 @@ while run:
         cursor_y = -10
     
     #class setup
-    cursor_setup = cursor(cursor_x,cursor_y,5,5)
-    #load and draw objects
-    CURSOR=pygame.Rect(cursor_setup.x,cursor_setup.y,cursor_setup.width,cursor_setup.lenght)
-    pygame.draw.rect(screen,cursor_color,CURSOR)
+    cursor_setup = cursor(cursor_x,cursor_y,10,10) #change last 2 numbers to change cursor radius and width
+    #load and/or draw objects
+    pygame.draw.circle(screen,cursor_color,(cursor_x,cursor_y),cursor_setup.radius,cursor_setup.width)
+    
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
